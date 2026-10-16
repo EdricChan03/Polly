@@ -23,7 +23,7 @@ kotlin {
 
 tasks {
     shadowJar {
-        archiveFileName.set("Polly.jar")
+        archiveFileName = "Polly.jar"
         manifest {
             attributes("Main-Class" to "me.moeszyslak.polly.MainAppKt")
         }
@@ -35,7 +35,7 @@ val writeProperties = tasks.register<WriteProperties>("writeProperties") {
     property("description", project.description.toString())
     property("version", version.toString())
     property("url", "https://github.com/the-programmers-hangout/Polly")
-    destinationFile.set(layout.buildDirectory.file("bot-resources/bot.properties"))
+    destinationFile = layout.buildDirectory.file("bot-resources/bot.properties")
 }
 
 sourceSets {
