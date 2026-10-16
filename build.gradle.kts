@@ -17,24 +17,29 @@ dependencies {
     implementation(libs.fuzzywuzzy)
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 tasks {
-    compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-        dependsOn("writeProperties")
-    }
-
-    register<WriteProperties>("writeProperties") {
-        property("name", project.name)
-        property("description", project.description.toString())
-        property("version", version.toString())
-        property("url", "https://github.com/the-programmers-hangout/Polly")
-        setOutputFile("src/main/resources/bot.properties")
-    }
-
     shadowJar {
         archiveFileName.set("Polly.jar")
         manifest {
             attributes("Main-Class" to "me.moeszyslak.polly.MainAppKt")
         }
+    }
+}
+
+val writeProperties = tasks.register<WriteProperties>("writeProperties") {
+    property("name", project.name)
+    property("description", project.description.toString())
+    property("version", version.toString())
+    property("url", "https://github.com/the-programmers-hangout/Polly")
+    destinationFile.set(layout.buildDirectory.file("bot-resources/bot.properties"))
+}
+
+sourceSets {
+    main {
+        output.dir(writeProperties)
     }
 }
