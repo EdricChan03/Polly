@@ -1,4 +1,4 @@
-FROM gradle:8.1.1-jdk17 AS build
+FROM gradle:9.8.1-jdk17 AS build
 COPY --chown=gradle:gradle . /polly
 WORKDIR /polly
 RUN gradle shadowJar --no-daemon
